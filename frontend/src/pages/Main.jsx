@@ -5,17 +5,16 @@ import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/App.css';
 import React from 'react';
+import Slideshow from '../Components/Slideshow';
+import Fadeshow from '../Components/Fadeshow';
 
 const Main = () => {
     return (
         <Container fluid>
-            <Row>
-                <Col xs={3}>Col</Col>
-                <Col xs={3}>Col</Col>
-                <Col xs={3}>Col</Col>
-            {/* <Col xs={{ span: 3}}>Col</Col>
-            <Col xs={{ span: 3}}>Col</Col>
-            <Col xs={{ span: 3, offset: 3}}>Col</Col> */}
+            <Row style={{ innerHeight: '300px'}}>
+                <Slideshow />
+                <h1 style={{textAlign: 'center', margin: '30px 30px'}}>SALES</h1>
+                <Fadeshow />
             </Row>
         </Container>
     );

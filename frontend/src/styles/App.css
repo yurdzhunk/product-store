@@ -12,3 +12,13 @@ font-size: 1.5rem;
 #nvl {
     margin-left: 16px;
 }
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.accordion-button:focus {
+  outline: none;
+  box-shadow: none;
+}
