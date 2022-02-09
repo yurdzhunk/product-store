@@ -2,7 +2,7 @@ import React, { createRef, useRef } from 'react';
 import {useParams} from "react-router-dom";
 import {useLocation} from 'react-router-dom';
 import { useState, useEffect, useMemo} from 'react';
-import { Container, Row, Col, Button, Accordion, Card, Form} from 'react-bootstrap';
+import { Container, Row, Col, Button, Accordion, Card, Form, Fade} from 'react-bootstrap';
 import LazyLoad from 'react-lazyload';
 import { productCollection } from '../data/ProductCollection';
 
@@ -44,14 +44,31 @@ const Products = (props) => {
     //Quantity of products to buy
 
     const [inpNumber, setInpNumber] = useState([]);
+    const [bought, setBought] = useState([]);
+    const [btnVar, setBtnVar] = useState([]);
+    const [btnVal, setBtnVal] = useState([]);
 
     useEffect(() => {
         let a = []
+        let b = []
+        let c = []
+        let d = []
         for (let i=0; i<products.length ; i+=1 ){
             a.push(1);       
         }
-        console.log('a' + a);
+        for (let i=0; i<products.length ; i+=1 ){
+            b.push(false);       
+        }
+        for (let i=0; i<products.length ; i+=1 ){
+            c.push('primary');       
+        }
+        for (let i=0; i<products.length ; i+=1 ){
+            d.push('Buy');       
+        }
         setInpNumber(a);
+        setBought(b);
+        setBtnVar(c);
+        setBtnVal(d);
     }, [products]);
 
     const minusQuantity = (id) => {
@@ -77,13 +94,28 @@ const Products = (props) => {
             console.log('else');
         }
     }
+
+    const buyProduct = (id) => {
+        console.log('works');
+        let a = bought;
+        a.splice(id, 1, true);
+        setBought([...a]);
+
+        let b = btnVar;
+        b.splice(id, 1, 'success');
+        setBtnVar([...b]);
+
+        let c = btnVal;
+        c.splice(id, 1, 'Done');
+        setBtnVal([...c]);
+    }
    
 
     return <div>
                 
                 <Container fluid>
                     <Row>
-                        <Accordion>
+                        <Accordion onMouseDown={e => e.preventDefault()}>
                             <Accordion.Item eventKey='0'>
                                 <Accordion.Header>Filters</Accordion.Header>
                                 <Accordion.Body>
@@ -149,18 +181,28 @@ const Products = (props) => {
                                                                 variant='light'
                                                                 onClick={event => minusQuantity(index)}
                                                                 style={{marginLeft: '10px'}}
+                                                                onMouseDown={e => e.preventDefault()}
                                                                 >-</Button>
                                                                 <span  
-                                                                style={{width: '30px', textAlign: 'center', margin: '3px'}} 
+                                                                style={{width: '30px', textAlign: 'center', margin: '3px', padding: '10px'}} 
                                                                 >{inpNumber[index]}</span>
                                                                 <Button 
                                                                 variant='light'
                                                                 onClick={event => plusQuantity(index)}
+                                                                onMouseDown={e => e.preventDefault()}
                                                                 >+</Button>
                                                             </Col>
                                                         </Row>
                                                         <Row>
-                                                                <Button variant="primary" style={{ width: '100%', marginTop: '3px'}}>Buy</Button>
+                                                            <Button 
+                                                                id='btn-action' 
+                                                                variant={btnVar[index]} 
+                                                                style={{ width: '100%', marginTop: '3px'}} 
+                                                                onMouseDown={e => e.preventDefault()}
+                                                                onClick={() => buyProduct(index)}
+                                                                >
+                                                                {btnVal[index]}
+                                                            </Button>
                                                         </Row>
                                                 </Card.Body>
                                             </Card>

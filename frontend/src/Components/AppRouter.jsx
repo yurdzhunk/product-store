@@ -5,6 +5,7 @@ import About from "../pages/About";
 import NearStore from "../pages/NearStore";
 import Sales from "../pages/Sales";
 import Products from "../pages/Products";
+import CartPage from '../pages/CartPage';
 
 const AppRouter = () => {
     return (
@@ -14,6 +15,7 @@ const AppRouter = () => {
           <Route path='/sales' element= {<Sales />} />
           <Route path='/near' element= {<NearStore />} />
           <Route path='/about' element= {<About />} />
+          <Route path='/cart' element= {<CartPage />} />
           <Route path='*' element= {<Navigate to='/main' />} />
         </Routes>
     );

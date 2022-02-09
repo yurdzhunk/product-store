@@ -1,4 +1,5 @@
 import React from 'react';
+import {BagXFill} from 'react-bootstrap-icons';
 
 const Sales = () => {
     return (

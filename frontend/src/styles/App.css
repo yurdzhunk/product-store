@@ -18,7 +18,102 @@ font-size: 1.5rem;
   box-shadow: none;
 }
 
-.accordion-button:focus {
+.accordion-button.collapsed {
   outline: none;
   box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+  outline: none;
+  box-shadow: none;
+}
+.accordion-header {
+  outline: none;
+  box-shadow: none;
+}
+
+#accor:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.modal-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.modal-exit {
+  opacity: 1;
+}
+.modal-exit-active {
+  opacity: 0;
+  transform: translateX(300px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+#nav-cart {
+  color: grey;
+  margin-top: 5px;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+#nav-cart:hover {
+  color: rgb(214, 210, 210);
+}
+
+#nav-cart:active {
+  transform: translateY(4px);
+}
+
+#cancel-prod {
+  cursor: pointer;
+}
+
+#cancel-prod:hover {
+  color: rgb(214, 210, 210);
+}
+
+#cancel-prod:active {
+    transform: translateY(4px);
+}
+
+#btn-action:active {
+  transform: translateY(4px);
+}
+
+
+
+.cart-enter {
+  opacity: 0;
+}
+.cart-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.cart-exit {
+  opacity: 1;
+}
+.cart-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.post-enter {
+  transform: translateX(350px);
+}
+.post-enter-active {
+  transform: translateX(0);
+  transition: all 500ms ease-in;
+}
+.post-exit {
+  transform: translateX(0);
+}
+.post-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
 }

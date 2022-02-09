@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import {PersonCircle} from 'react-bootstrap-icons';
+import {PersonCircle, CartFill} from 'react-bootstrap-icons';
 import {useNavigate} from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
+import MyModal from './MyModal';
+import CartPage from '../pages/CartPage';
+import '../styles/App.css'
 
 const MyNavbar = () => {
 
     const navigate = useNavigate();
+
+    const [openCart, setOpenCart] = useState(false);
 
 
     return (
@@ -33,8 +39,13 @@ const MyNavbar = () => {
                         <Nav.Link id='nvl' href="/about">About store</Nav.Link>
                     </Nav>
                     <Nav className='ms-auto'>
-                        <Nav.Link id='nvl' href="/about">Login</Nav.Link>
+                        <CartFill 
+                        size={26}
+                        id='nav-cart'
+                        onClick = {() => navigate('/cart')}
+                        />
                         <PersonCircle color='grey' size={26} style={{marginTop: '7px'}}/>
+                        <Nav.Link id='nvl' href="/about">Sign in</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
