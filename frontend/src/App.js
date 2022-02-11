@@ -8,14 +8,7 @@ import image1 from './images/sale1.png';
 
 function App() {
 
-  const [productsInCart, setProductsInCart] = useState([{id:1, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  {id:2, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  {id:3, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  {id:4, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  {id:5, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  {id:6, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  {id:7, name: 'Sour Cream', price: 7.5, image: image1, number: 3},
-  ])
+  const [productsInCart, setProductsInCart] = useState([]);
 
   return (
     <div className="App">

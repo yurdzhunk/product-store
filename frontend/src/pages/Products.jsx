@@ -1,18 +1,21 @@
-import React, { createRef, useRef } from 'react';
-import {useParams} from "react-router-dom";
+import React, { useRef } from 'react';
 import {useLocation} from 'react-router-dom';
-import { useState, useEffect, useMemo} from 'react';
+import { useState, useEffect} from 'react';
 import { Container, Row, Col, Button, Accordion, Card, Form, Fade} from 'react-bootstrap';
 import LazyLoad from 'react-lazyload';
 import { productCollection } from '../data/ProductCollection';
+import { animated, useSpring } from 'react-spring';
+import { useContext } from 'react';
+import { CartContext } from '../context/context';
 
 const Products = (props) => {
 
     const location = useLocation();
+    const {productsInCart, setProductsInCart} = useContext(CartContext);
 
     const [parameters, setParameters] = useState({
-        category: 'all',
-        producer: 'any',
+        category: 'All',
+        producer: 'Any',
         priceLimit: 100
     });
 
@@ -26,18 +29,33 @@ const Products = (props) => {
 
     useEffect(() => {
         if (location.state != null) {
-            setParameters({category: location.state.category, producer: 'any', priceLimit: 100});
+            setParameters({category: location.state.category, producer: 'Any', priceLimit: 100});
         }
-        categoryRef.current.value = 'all';
-        producerRef.current.value = 'any';
+        categoryRef.current.value = 'All';
+        producerRef.current.value = 'Any';
         moneyRef.current.value = 100;
         setRangeValue(100);
     }, [location.state]);
 
-    //sorting
+    //filter
     useEffect(() => {
         console.log('sort of products');
         console.log(parameters);
+        console.log('1    ' + products)
+
+        let tempArray = productCollection;
+        if (parameters.category != 'All') {
+            tempArray = tempArray.filter(p => p.category == parameters.category);    
+        }
+        console.log('t1    ' + tempArray);
+        if (parameters.producer != 'Any') {
+            tempArray = tempArray.filter(p => p.producer == parameters.producer);
+        console.log(products);
+        }
+        console.log('t2     ' + products);
+        tempArray = tempArray.filter(p => p.price <= parameters.priceLimit);
+        console.log('temp    ' + tempArray);
+        setProducts([...tempArray]);
     }, [parameters]);
 
 
@@ -108,14 +126,23 @@ const Products = (props) => {
         let c = btnVal;
         c.splice(id, 1, 'Done');
         setBtnVal([...c]);
+
+        setProductsInCart([...productsInCart, {name: products[id].name, price: products[id].price, image: products[id].image, number: inpNumber[id]}]);
     }
+
+    const [styleCard, api1] = useSpring(() => ({ 
+        delay: 300,
+        from: {opacity: 0},
+        to: {opacity: 1},
+        config: {duration: 1000}
+    }))
    
 
     return <div>
                 
                 <Container fluid>
                     <Row>
-                        <Accordion onMouseDown={e => e.preventDefault()}>
+                        <Accordion>
                             <Accordion.Item eventKey='0'>
                                 <Accordion.Header>Filters</Accordion.Header>
                                 <Accordion.Body>
@@ -123,18 +150,18 @@ const Products = (props) => {
                                         <Col xs={6} md={4}>
                                             <Form.Label>Category of products:</Form.Label>
                                             <Form.Select ref={categoryRef} onChange={event => setParameters({...parameters, category: event.target.value})} >
-                                                <option value="all">All</option>
-                                                <option value="grocery">Grocery</option>
-                                                <option value="milk">Milk</option>
-                                                <option value="meat and cheese">Meat and Cheese</option>
-                                                <option value="drinks">Drinks</option>
-                                                <option value="bakery">Bakery</option>
+                                                <option value="All">All</option>
+                                                <option value="Grocery">Grocery</option>
+                                                <option value="Milk">Milk</option>
+                                                <option value="Meat_and_Cheese">Meat and Cheese</option>
+                                                <option value="Drinks">Drinks</option>
+                                                <option value="Bakery">Bakery</option>
                                             </Form.Select>
                                         </Col>
                                         <Col xs={6} md={4}>
                                             <Form.Label>Producer:</Form.Label>
                                             <Form.Select ref={producerRef} onChange={event => setParameters({...parameters, producer: event.target.value})}>
-                                                <option value="any">any</option>
+                                                <option value="Any">Any</option>
                                                 <option value="1">One</option>
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
@@ -164,6 +191,7 @@ const Products = (props) => {
                         {
                             products.map(function(product, index) {
                                 return <Col xs={6} md={4} key={index}>
+                                        <animated.div style={styleCard}>
                                             <Card style={{ width: '100%' }}>
                                                 <LazyLoad>
                                                     <Card.Img variant="top" src={product.image} />
@@ -171,12 +199,11 @@ const Products = (props) => {
                                                 <Card.Body>
                                                     <Card.Title>{product.name}</Card.Title>
                                                     <Card.Text>
-                                                        Some quick example text to build on the card title and make up the bulk of
-                                                        the card's content.
+                                                        {product.price}$ / 1 {product.measure}
                                                     </Card.Text>
                                                     <hr />
                                                         <Row>
-                                                            <Col xs={12} md={{ span: 8, offset: 3}}>
+                                                            <Col xs={12} md={{ span: 8, offset: 4}}>
                                                                 <Button 
                                                                 variant='light'
                                                                 onClick={event => minusQuantity(index)}
@@ -206,6 +233,7 @@ const Products = (props) => {
                                                         </Row>
                                                 </Card.Body>
                                             </Card>
+                                        </animated.div>
                                         </Col>
                             })
                         }

@@ -19,7 +19,7 @@ const CartItem = (props) => {
                     <h5 style={{ paddingTop: '50%', fontFamily: 'sans-serif'}}>{props.product.number * props.product.price}$</h5>
                 </Col>
                 <Col xs={2} md={2}>
-                    <BagXFill id='cancel-prod' size={30} style={{marginTop: '45%'}}/>
+                    <BagXFill id='cancel-prod' size={30} style={{marginTop: '45%'}} onClick={() => props.remove(props.ind)}/>
                 </Col>
             </Row>
             <hr />
