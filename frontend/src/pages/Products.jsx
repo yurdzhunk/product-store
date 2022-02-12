@@ -39,22 +39,15 @@ const Products = (props) => {
 
     //filter
     useEffect(() => {
-        console.log('sort of products');
-        console.log(parameters);
-        console.log('1    ' + products)
 
         let tempArray = productCollection;
         if (parameters.category != 'All') {
             tempArray = tempArray.filter(p => p.category == parameters.category);    
         }
-        console.log('t1    ' + tempArray);
         if (parameters.producer != 'Any') {
             tempArray = tempArray.filter(p => p.producer == parameters.producer);
-        console.log(products);
         }
-        console.log('t2     ' + products);
         tempArray = tempArray.filter(p => p.price <= parameters.priceLimit);
-        console.log('temp    ' + tempArray);
         setProducts([...tempArray]);
     }, [parameters]);
 
@@ -94,10 +87,8 @@ const Products = (props) => {
             let a = inpNumber;
             a.splice(id, 1, a[id] - 1);
             setInpNumber([...a]);
-            console.log(inpNumber);
         }
         else {
-            console.log('else');
         }
     }
 
@@ -106,7 +97,6 @@ const Products = (props) => {
             let a = inpNumber;
             a.splice(id, 1, a[id] + 1);
             setInpNumber([...a]);
-            console.log(inpNumber);
         }
         else {
             console.log('else');
@@ -114,7 +104,6 @@ const Products = (props) => {
     }
 
     const buyProduct = (id) => {
-        console.log('works');
         let a = bought;
         a.splice(id, 1, true);
         setBought([...a]);

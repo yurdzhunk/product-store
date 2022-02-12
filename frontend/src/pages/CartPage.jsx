@@ -19,8 +19,6 @@ const CartPage = () => {
     }))
 
     const removeItem = (id) => {
-        console.log('id    ' + id);
-        console.log('c    ' + productsInCart);
         let a = productsInCart;
         a.splice(id, 1);
         setProductsInCart([...a]);
